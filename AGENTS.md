@@ -1,0 +1,13 @@
+# Papermark repository guide
+
+Read `.cursor/rules/rule-claude-sonnet-37.mdc` for the existing reuse/investigation rules; for `**/trigger/**/*.ts(x)`, also read `rule-trigger-typescript.mdc`. Preserve its requirement for exported `@trigger.dev/sdk/v3` tasks and prohibition on deprecated `client.defineJob`. Rule examples do not authorize initializing or deploying external services.
+
+This Next.js application spans `app/`, `pages/`, `components/`, `lib/`, `context/`, `prisma/`, and enterprise functionality under `ee/`. Use the package's Node 22 engine requirement rather than the older README minimum. `npm ci` runs Prisma generation via postinstall. `npm run dev` starts local Next; `npm run build` builds it, and `npm run lint` runs Next lint. No test or standalone typecheck script is declared.
+
+Database-backed development requires a disposable Postgres database and the affected feature's integrations (storage/email/analytics/background jobs). `dev:prisma` runs migrations, and `vercel-build` is different from the ordinary build because it changes database state. Don't point either at production for a routine check. Keep document contents, signing/access tokens, and environment values private. UI, auth/document-sharing, webhook, and Trigger changes need focused behavior checks with safe fixtures; compilation is not evidence of live delivery, billing, or correct access control. Deployment/migrations/external jobs remain within explicit task authority.
+
+## Completing work
+
+Carry the authorized change through the relevant checks and repair failures it causes. Make routine, reversible implementation choices using existing patterns; ask only when missing information, a material product decision, or an authorization boundary prevents the next step. Existing authorization remains valid within its scope. If blocked, name the exact action and missing prerequisite, retain concise evidence, and continue independent work.
+
+Choose verification proportional to the change. For instructions or prose, inspect changed paths, links, and local instruction precedence and run `git diff --check -- <changed-paths>`; don't install dependencies or run the application solely for a prose edit. For behavior changes, exercise the affected behavior and applicable checks below, then broaden only for failures or unresolved risk. Report files changed, checks actually run and their results, commands only inspected, and remaining limitations. A build or source inspection alone does not prove runtime behavior. Continue through already-authorized follow-through; stop at explicit review checkpoints or boundaries requiring new authorization.
